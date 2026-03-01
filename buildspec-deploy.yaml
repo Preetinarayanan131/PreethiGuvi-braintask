@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9   # optional, just for AWS CLI
+  pre_build:
+    commands:
+      - echo Configuring kubectl for EKS...
+      - aws eks update-kubeconfig --region us-east-1 --name brain-cluster
+  build:
+    commands:
+      - echo Deploying Kubernetes manifests...
+      - kubectl apply -f deployment.yaml
+      - kubectl apply -f service.yaml
